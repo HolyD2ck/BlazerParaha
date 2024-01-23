@@ -4,7 +4,7 @@
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
 
-<h1 class="t">Вы уверены, что хотите удалить этого студента?</h1>
+<h1 class="t">Вы уверены, что хотите удалить этого преподавателя?</h1>
 <button class="btn btn-danger" @onclick="HandleValidSubmit">Удалить</button>
 <button class="btn btn-info" @onclick="Back">Назад</button>
 
@@ -15,29 +15,29 @@
 
     private async Task HandleValidSubmit()
     {
-        var student = await _context.Student.FirstOrDefaultAsync(m => m.id == id);
+        var prepod = await _context.Prepod.FirstOrDefaultAsync(m => m.id == id);
 
-        if (student != null)
+        if (prepod != null)
         {
-            _context.Student.Remove(student);
+            _context.Prepod.Remove(prepod);
             await _context.SaveChangesAsync();
         }
 
-        NavigationManager.NavigateTo("/Students/Index");
+        NavigationManager.NavigateTo("/Prepods/Index");
     }
 
     protected override async Task OnInitializedAsync()
     {
-       
-        var student = await _context.Student.FirstOrDefaultAsync(m => m.id == id);
-        if (student == null)
+
+        var prepod = await _context.Prepod.FirstOrDefaultAsync(m => m.id == id);
+        if (prepod == null)
         {
-            NavigationManager.NavigateTo("/Students/Index");
+            NavigationManager.NavigateTo("/Prepods/Index");
         }
     }
     public void Back()
     {
 
-            NavigationManager.NavigateTo("/Students/Index");
+        NavigationManager.NavigateTo("/Prepods/Index");
     }
 }

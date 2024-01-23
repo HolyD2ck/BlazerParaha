@@ -4,56 +4,56 @@
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
 
-<h1 class="t">Внести Студента</h1>
+<h1 class="t">Внести Преподавателя</h1>
 <br />
-<EditForm Model="newStudent" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="newPrepod" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label for="surname" class="control-label">Фамилия</label>
-                <InputText id="surname" @bind-Value="newStudent.Фамилия" />
+                <InputText id="surname" @bind-Value="newPrepod.Фамилия" />
             </div>
             <div class="form-group">
                 <label for="name" class="control-label">Имя</label>
-                <InputText id="name" @bind-Value="newStudent.Имя" />
+                <InputText id="name" @bind-Value="newPrepod.Имя" />
             </div>
             <div class="form-group">
                 <label for="patronymic" class="control-label">Отчество</label>
-                <InputText id="patronymic" @bind-Value="newStudent.Отчество" />
+                <InputText id="patronymic" @bind-Value="newPrepod.Отчество" />
             </div>
             <div class="form-group">
-                <label for="height" class="control-label">Рост</label>
-                <InputNumber id="height" @bind-Value="newStudent.Рост" />
+                <label for="curator" class="control-label">Куратор Группы</label>
+                <InputText id="curator" @bind-Value="newPrepod.Куратор_Группы" />
+            </div>
+            <div class="form-group">
+                <label for="profession" class="control-label">Профессия</label>
+                <InputText id="profession" @bind-Value="newPrepod.Профессия" />
             </div>
             <div class="form-group">
                 <label for="birthday" class="control-label">День Рождения</label>
-                <InputDate id="birthday" @bind-Value="newStudent.День_Рождения" />
+                <InputDate id="birthday" @bind-Value="newPrepod.День_Рождения" />
             </div>
             <div class="form-group">
-                <label for="group" class="control-label">Группа</label>
-                <InputText id="group" @bind-Value="newStudent.Группа" />
+                <label for="roomNumber" class="control-label">Номер Кабинета</label>
+                <InputNumber id="roomNumber" @bind-Value="newPrepod.Номер_Кабинета" />
             </div>
             <div class="form-group">
-                <label for="specialty" class="control-label">Специальность</label>
-                <InputText id="specialty" @bind-Value="newStudent.Специальность" />
+                <label for="salary" class="control-label">Зарплата</label>
+                <InputNumber id="salary" @bind-Value="newPrepod.Зарплата" />
             </div>
             <div class="form-group">
-                <label for="scholarship" class="control-label">Стипендия</label>
-                <InputText id="scholarship" @bind-Value="newStudent.Стипендия" />
-            </div>
-            <div class="form-group">
-                <label for="age" class="control-label">Возраст</label>
-                <InputNumber id="age" @bind-Value="newStudent.Возраст" />
+                <label for="experience" class="control-label">Стаж</label>
+                <InputNumber id="experience" @bind-Value="newPrepod.Стаж" />
             </div>
             <div class="form-group">
                 <br />
-                <button type="submit">Добавить студента</button>
+                <button type="submit">Добавить преподавателя</button>
             </div>
             <br />
             <div class="form-group">
-                <NavLink class="nav-link" href="/Students/Index">
+                <NavLink class="nav-link" href="/Prepods/Index">
                     <span class="oi oi-minus" aria-hidden="true"></span> Вернуться к Просмотру
                 </NavLink>
             </div>
@@ -61,13 +61,13 @@
     </div>
 </EditForm>
 @code {
-    private Student newStudent = new Student();
+    private Prepod newPrepod = new Prepod();
 
     private async Task HandleValidSubmit()
     {
-        _context.Student.Add(newStudent);
+        _context.Prepod.Add(newPrepod);
         await _context.SaveChangesAsync();
 
-        NavigationManager.NavigateTo("/Students/Index");
+        NavigationManager.NavigateTo("/Prepods/Index");
     }
 }

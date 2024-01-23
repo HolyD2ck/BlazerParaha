@@ -1,6 +1,6 @@
 ﻿@page "/Prepods/Index"
 @using BlazorApp2.Models
-@inject BlazorApp2Context _context
+@inject BlazorApp2Context context
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
 
@@ -9,52 +9,52 @@
 
 else
 {
-    <NavLink class="nav-link" href="/Students/Create">
-        <span class="oi oi-plus" aria-hidden="true"></span> Добавить студента
-    </NavLink>
-    <br>
-    <table class='table'>
-        <thead>
+<NavLink class="nav-link" href="/Prepods/Create">
+    <span class="oi oi-plus" aria-hidden="true"></span> Добавить преподавателя
+</NavLink>
+<br>
+<table class='table'>
+    <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Куратор Группы</th>
+            <th>Профессия</th>
+            <th>День Рождения</th>
+            <th>Номер Кабинета</th>
+            <th>Зарплата</th>
+            <th>Стаж</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var prepod in prepods)
+        {
             <tr>
-                <th>Фамилия</th>
-                <th>Имя</th>
-                <th>Отчество</th>
-                <th>Куратор</th>
-                <th>Профессия</th>
-                <th>День Рождения</th>
-                <th>Номер Кабинета</th>
-                <th>Зарплата</th>
-                <th>Стаж</th>
+                <td>@prepod.Фамилия</td>
+                <td>@prepod.Имя</td>
+                <td>@prepod.Отчество</td>
+                <td>@prepod.КураторГруппы</td>
+                <td>@prepod.Профессия</td>
+                <td>@prepod.ДеньРождения.Date.ToString("d")</td>
+                <td>@prepod.НомерКабинета</td>
+                <td>@prepod.Зарплата</td>
+                <td>@prepod.Стаж</td>
+                <td>
+                    <NavLink href="@($"Prepods/Edit/{prepod.id}")">Изменить</NavLink> |
+                    <NavLink href="@($"Prepods/Delete/{prepod.id}")">Удалить</NavLink>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var student in students)
-            {
-                <tr>
-                    <td>@student.Фамилия</td>
-                    <td>@student.Имя</td>
-                    <td>@student.Отчество</td>
-                    <td>@student.Рост</td>
-                    <td>@student.День_Рождения.Date.ToString("d")</td>
-                    <td>@student.Группа</td>
-                    <td>@student.Специальность</td>
-                    <td>@student.Стипендия</td>
-                    <td>@student.Возраст</td>
-                    <td>
-                        <NavLink href="@($"Students/Edit/{student.id}")">Изменить</NavLink> |
-                        <NavLink href="@($"Students/Delete/{student.id}")">Удалить</NavLink>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 }
 
 @code {
-    private List<Student>? students;
+    private List<Prepod>? prepods;
 
     protected override async Task OnInitializedAsync()
     {
-        students = await _context.Student.ToListAsync();
+        prepods = await _context.Prepod.ToListAsync();
     }
 }

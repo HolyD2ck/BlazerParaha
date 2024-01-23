@@ -4,93 +4,93 @@
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
 
-<h3>Редактирование данных студента</h3>
-@if (student == null)
+<h3>Редактирование данных преподавателя</h3>
+@if (prepod == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <EditForm Model="@student" OnValidSubmit="HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="surname" class="control-label">Фамилия</label>
-                <InputText id="surname" @bind-Value="student.Фамилия" />
-            </div>
-            <div class="form-group">
-                <label for="name" class="control-label">Имя</label>
-                <InputText id="name" @bind-Value="student.Имя" />
-            </div>
-            <div class="form-group">
-                <label for="patronymic" class="control-label">Отчество</label>
-                <InputText id="patronymic" @bind-Value="student.Отчество" />
-            </div>
-            <div class="form-group">
-                <label for="height" class="control-label">Рост</label>
-                <InputNumber id="height" @bind-Value="student.Рост" />
-            </div>
-            <div class="form-group">
-                <label for="birthday" class="control-label">День Рождения</label>
-                <InputDate id="birthday" @bind-Value="student.День_Рождения" />
-            </div>
-            <div class="form-group">
-                <label for="group" class="control-label">Группа</label>
-                <InputText id="group" @bind-Value="student.Группа" />
-            </div>
-            <div class="form-group">
-                <label for="specialty" class="control-label">Специальность</label>
-                <InputText id="specialty" @bind-Value="student.Специальность" />
-            </div>
-            <div class="form-group">
-                <label for="scholarship" class="control-label">Стипендия</label>
-                <InputText id="scholarship" @bind-Value="student.Стипендия" />
-            </div>
-            <div class="form-group">
-                <label for="age" class="control-label">Возраст</label>
-                <InputNumber id="age" @bind-Value="student.Возраст" />
-            </div>
-            <div class="form-group">
+    <EditForm Model="@prepod" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="surname" class="control-label">Фамилия</label>
+                    <InputText id="surname" @bind-Value="prepod.Фамилия" />
+                </div>
+                <div class="form-group">
+                    <label for="name" class="control-label">Имя</label>
+                    <InputText id="name" @bind-Value="prepod.Имя" />
+                </div>
+                <div class="form-group">
+                    <label for="patronymic" class="control-label">Отчество</label>
+                    <InputText id="patronymic" @bind-Value="prepod.Отчество" />
+                </div>
+                <div class="form-group">
+                    <label for="curator" class="control-label">Куратор Группы</label>
+                    <InputText id="curator" @bind-Value="prepod.Куратор_Группы" />
+                </div>
+                <div class="form-group">
+                    <label for="profession" class="control-label">Профессия</label>
+                    <InputText id="profession" @bind-Value="prepod.Профессия" />
+                </div>
+                <div class="form-group">
+                    <label for="birthday" class="control-label">День Рождения</label>
+                    <InputDate id="birthday" @bind-Value="prepod.День_Рождения" />
+                </div>
+                <div class="form-group">
+                    <label for="roomNumber" class="control-label">Номер Кабинета</label>
+                    <InputNumber id="roomNumber" @bind-Value="prepod.Номер_Кабинета" />
+                </div>
+                <div class="form-group">
+                    <label for="salary" class="control-label">Зарплата</label>
+                    <InputNumber id="salary" @bind-Value="prepod.Зарплата" />
+                </div>
+                <div class="form-group">
+                    <label for="experience" class="control-label">Стаж</label>
+                    <InputNumber id="experience" @bind-Value="prepod.Стаж" />
+                </div>
+                <div class="form-group">
+                    <br />
+                    <button type="submit">Изменить преподавателя</button>
+                </div>
                 <br />
-                <button type="submit">Изменить студента</button>
-            </div>
-            <br />
-            <div class="form-group">
-                <NavLink class="nav-link" href="/Students/Index">
-                    <span class="oi oi-minus" aria-hidden="true"></span> Вернуться к Просмотру
-                </NavLink>
+                <div class="form-group">
+                    <NavLink class="nav-link" href="/Prepods/Index">
+                        <span class="oi oi-minus" aria-hidden="true"></span> Вернуться к Просмотру
+                    </NavLink>
+                </div>
             </div>
         </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-    <button class="btn btn-secondary" @onclick="Back">Отмена</button>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <button class="btn btn-secondary" @onclick="Back">Отмена</button>
     </EditForm>
 }
 @code {
     [Parameter]
     public int id { get; set; }
-    private Student student;
+    private Prepod prepod;
 
     protected override async Task OnInitializedAsync()
     {
-        student = await _context.Student.FirstOrDefaultAsync(m => m.id == id);
-        if (student == null)
+        prepod = await _context.Prepod.FirstOrDefaultAsync(m => m.id == id);
+        if (prepod == null)
         {
-            NavigationManager.NavigateTo("/Students/Index");
+            NavigationManager.NavigateTo("/Prepods/Index");
         }
     }
 
     private async Task HandleValidSubmit()
     {
-        _context.Student.Update(student);
+        _context.Prepod.Update(prepod);
         await _context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/Students/Index");
+        NavigationManager.NavigateTo("/Prepods/Index");
     }
 
     private void Back()
     {
-        NavigationManager.NavigateTo("/Students/Index");
+        NavigationManager.NavigateTo("/Prepods/Index");
     }
 }
