@@ -1,0 +1,63 @@
+﻿@page "/Students/Index"
+@using BlazorApp2.Models
+@inject BlazorApp2Context _context
+@using Microsoft.EntityFrameworkCore
+@inject NavigationManager NavigationManager
+
+<h1 class="t">Список студентов</h1>
+<br />
+@if (students == null)
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <NavLink class="nav-link" href="/Students/Create">
+        <span class="oi oi-plus" aria-hidden="true"></span> Добавить студента
+    </NavLink>
+    <br>
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Рост</th>
+                <th>День Рождения</th>
+                <th>Группа</th>
+                <th>Специальность</th>
+                <th>Стипендия</th>
+                <th>Возраст</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in students)
+            {
+                <tr>
+                    <td>@student.Фамилия</td>
+                    <td>@student.Имя</td>
+                    <td>@student.Отчество</td>
+                    <td>@student.Рост</td>
+                    <td>@student.День_Рождения.Date.ToString("d")</td>
+                    <td>@student.Группа</td>
+                    <td>@student.Специальность</td>
+                    <td>@student.Стипендия</td>
+                    <td>@student.Возраст</td>
+                    <td>
+                        <NavLink href="@($"Students/Edit/{student.id}")">Изменить</NavLink> |
+                        <NavLink href="@($"Students/Delete/{student.id}")">Удалить</NavLink>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Student>? students;
+
+    protected override async Task OnInitializedAsync()
+    {
+        students = await _context.Student.ToListAsync();
+    }
+}

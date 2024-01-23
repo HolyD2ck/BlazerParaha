@@ -1,0 +1,96 @@
+﻿@page "/Prepods/Edit/{id:int}"
+@using BlazorApp2.Models
+@inject BlazorApp2Context _context
+@using Microsoft.EntityFrameworkCore
+@inject NavigationManager NavigationManager
+
+<h3>Редактирование данных студента</h3>
+@if (student == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="@student" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="surname" class="control-label">Фамилия</label>
+                <InputText id="surname" @bind-Value="student.Фамилия" />
+            </div>
+            <div class="form-group">
+                <label for="name" class="control-label">Имя</label>
+                <InputText id="name" @bind-Value="student.Имя" />
+            </div>
+            <div class="form-group">
+                <label for="patronymic" class="control-label">Отчество</label>
+                <InputText id="patronymic" @bind-Value="student.Отчество" />
+            </div>
+            <div class="form-group">
+                <label for="height" class="control-label">Рост</label>
+                <InputNumber id="height" @bind-Value="student.Рост" />
+            </div>
+            <div class="form-group">
+                <label for="birthday" class="control-label">День Рождения</label>
+                <InputDate id="birthday" @bind-Value="student.День_Рождения" />
+            </div>
+            <div class="form-group">
+                <label for="group" class="control-label">Группа</label>
+                <InputText id="group" @bind-Value="student.Группа" />
+            </div>
+            <div class="form-group">
+                <label for="specialty" class="control-label">Специальность</label>
+                <InputText id="specialty" @bind-Value="student.Специальность" />
+            </div>
+            <div class="form-group">
+                <label for="scholarship" class="control-label">Стипендия</label>
+                <InputText id="scholarship" @bind-Value="student.Стипендия" />
+            </div>
+            <div class="form-group">
+                <label for="age" class="control-label">Возраст</label>
+                <InputNumber id="age" @bind-Value="student.Возраст" />
+            </div>
+            <div class="form-group">
+                <br />
+                <button type="submit">Изменить студента</button>
+            </div>
+            <br />
+            <div class="form-group">
+                <NavLink class="nav-link" href="/Students/Index">
+                    <span class="oi oi-minus" aria-hidden="true"></span> Вернуться к Просмотру
+                </NavLink>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <button class="btn btn-secondary" @onclick="Back">Отмена</button>
+    </EditForm>
+}
+@code {
+    [Parameter]
+    public int id { get; set; }
+    private Student student;
+
+    protected override async Task OnInitializedAsync()
+    {
+        student = await _context.Student.FirstOrDefaultAsync(m => m.id == id);
+        if (student == null)
+        {
+            NavigationManager.NavigateTo("/Students/Index");
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        _context.Student.Update(student);
+        await _context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/Students/Index");
+    }
+
+    private void Back()
+    {
+        NavigationManager.NavigateTo("/Students/Index");
+    }
+}
