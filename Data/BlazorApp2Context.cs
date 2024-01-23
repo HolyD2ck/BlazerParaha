@@ -13,4 +13,6 @@ using BlazorApp2.Models;
         }
 
         public DbSet<BlazorApp2.Models.Student> Student { get; set; } = default!;
-    }
+
+        public DbSet<BlazorApp2.Models.Prepod> Prepod { get; set; } = default!;
+}

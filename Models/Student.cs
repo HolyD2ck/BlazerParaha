@@ -17,4 +17,5 @@ namespace BlazorApp2.Models
         public string? Стипендия { get; set; }
         public int? Возраст { get; set; }
     }
+  
 }

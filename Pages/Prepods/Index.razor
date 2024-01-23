@@ -1,12 +1,15 @@
 ﻿@page "/Prepods/Index"
 @using BlazorApp2.Models
-@inject BlazorApp2Context context
+@inject BlazorApp2Context _context
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
 
 <h1 class="t">Список Преподавателей</h1>
 <br />
-
+@if (prepods == null)
+{
+    <p><em>Загрузка...</em></p>
+}
 else
 {
 <NavLink class="nav-link" href="/Prepods/Create">
@@ -34,10 +37,10 @@ else
                 <td>@prepod.Фамилия</td>
                 <td>@prepod.Имя</td>
                 <td>@prepod.Отчество</td>
-                <td>@prepod.КураторГруппы</td>
+                <td>@prepod.Куратор_Группы</td>
                 <td>@prepod.Профессия</td>
-                <td>@prepod.ДеньРождения.Date.ToString("d")</td>
-                <td>@prepod.НомерКабинета</td>
+                <td>@prepod.День_Рождения.Date.ToString("d")</td>
+                <td>@prepod.Номер_Кабинета</td>
                 <td>@prepod.Зарплата</td>
                 <td>@prepod.Стаж</td>
                 <td>
