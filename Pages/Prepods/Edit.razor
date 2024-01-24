@@ -57,15 +57,11 @@ else
                     <button type="submit">Изменить преподавателя</button>
                 </div>
                 <br />
-                <div class="form-group">
-                    <NavLink class="nav-link" href="/Prepods/Index">
-                        <span class="oi oi-minus" aria-hidden="true"></span> Вернуться к Просмотру
-                    </NavLink>
-                </div>
+              
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Сохранить</button>
-        <button class="btn btn-secondary" @onclick="Back">Отмена</button>
+        <button class="btn btn-secondary" href="/Prepods/Index">Отмена</button>
     </EditForm>
 }
 @code {

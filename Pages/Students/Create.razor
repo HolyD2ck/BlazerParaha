@@ -65,6 +65,7 @@
 
     private async Task HandleValidSubmit()
     {
+        _context.EnsureData();
         _context.Student.Add(newStudent);
         await _context.SaveChangesAsync();
 

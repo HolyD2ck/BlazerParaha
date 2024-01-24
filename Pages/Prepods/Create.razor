@@ -66,6 +66,7 @@
     private async Task HandleValidSubmit()
     {
         _context.Prepod.Add(newPrepod);
+        _context.EnsureData2();
         await _context.SaveChangesAsync();
 
         NavigationManager.NavigateTo("/Prepods/Index");

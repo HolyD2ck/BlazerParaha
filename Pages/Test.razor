@@ -23,8 +23,8 @@
 
     class Model
     {
-        public int Width { get; set; } = 180;
-        public int Height { get; set; } = 52;
+        public int Width { get; set; } = 200;
+        public int Height { get; set; } = 60;
     }
 
     private void OnValidSubmit()
@@ -41,7 +41,7 @@
 
         public void Run(int consoleWidth, int consoleHeight)
         {
-            var imagePath = "wwwroot/images/1.jpg";
+            var imagePath = "wwwroot/images/itachi.jpg";
             using (var bitmap = new Bitmap(imagePath))
             {
                 // Вычисляем шаги для масштабирования изображения
