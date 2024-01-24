@@ -30,7 +30,7 @@ using System.Xml;
 
     public List<Student> ReadDataFromFile()
     {
-        List<string> lines = File.ReadAllLines("..\\BlzorApp2\\wwwroot\\Base\\Students.csv").ToList();
+        List<string> lines = File.ReadAllLines("..\\BlazorApp2\\wwwroot\\Base\\Students.csv").ToList();
         List<Student> students = new List<Student>();
 
         foreach (var line in lines)

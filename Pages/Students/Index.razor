@@ -3,7 +3,7 @@
 @inject BlazorApp2Context _context
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
-@inject 
+
 <h1 class="t">Список студентов</h1>
 <br />
 @if (students == null)
@@ -59,7 +59,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        _context.EnsureData();
         students = await _context.Student.ToListAsync();
-        students = await _context.Student.EnsureData();
     }
 }
