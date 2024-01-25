@@ -13,7 +13,7 @@ namespace BlazorApp2.Models
         public bool Судимость { get; set; }
         public string? Комната { get; set; }
         public bool Питомец { get; set; }
-        public int Мини_бар { get; set; }
+        public bool Мини_бар { get; set; }
         public string? Фото { get; set; }
     }
 }

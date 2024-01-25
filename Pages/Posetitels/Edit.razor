@@ -3,7 +3,7 @@
 @inject BlazorApp2Context _context
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
-
+@inject IWebHostEnvironment _env
 <h3>Редактирование данных преподавателя</h3>
 @if (posetitel == null)
 {
@@ -29,28 +29,32 @@ else
                     <InputText id="patronymic" @bind-Value="posetitel.Отчество" />
                 </div>
                 <div class="form-group">
-                    <label for="curator" class="control-label">Куратор Группы</label>
-                    <InputText id="curator" @bind-Value="posetitel.Куратор_Группы" />
+                    <label for="vozrast" class="control-label">Возраст</label>
+                    <InputNumber id="vozrast" @bind-Value="posetitel.Возраст" />
                 </div>
                 <div class="form-group">
-                    <label for="profession" class="control-label">Профессия</label>
-                    <InputText id="profession" @bind-Value="posetitel.Профессия" />
+                    <label for="razmer" class="control-label">Размер_багажа</label>
+                    <InputText id="razmer" @bind-Value="posetitel.Размер_багажа" />
                 </div>
                 <div class="form-group">
-                    <label for="birthday" class="control-label">День Рождения</label>
-                    <InputDate id="birthday" @bind-Value="posetitel.День_Рождения" />
+                    <label for="sud" class="control-label">Судимость</label>
+                    <InputSelect id="sud" @bind-Value="posetitel.Судимость" />
                 </div>
                 <div class="form-group">
-                    <label for="roomNumber" class="control-label">Номер Кабинета</label>
-                    <InputNumber id="roomNumber" @bind-Value="posetitel.Номер_Кабинета" />
+                    <label for="room" class="control-label">Комната</label>
+                    <InputText id="room" @bind-Value="posetitel.Комната" />
                 </div>
                 <div class="form-group">
-                    <label for="salary" class="control-label">Зарплата</label>
-                    <InputNumber id="salary" @bind-Value="posetitel.Зарплата" />
+                    <label for="pit" class="control-label">Питомец</label>
+                    <InputSelect id="pit" @bind-Value="posetitel.Питомец" />
                 </div>
                 <div class="form-group">
-                    <label for="experience" class="control-label">Стаж</label>
-                    <InputNumber id="experience" @bind-Value="posetitel.Стаж" />
+                    <label for="bar" class="control-label">Мини_бар</label>
+                    <InputSelect id="bar" @bind-Value="posetitel.Мини_бар" />
+                </div>
+                <div class="form-group">
+                    <label for="photo" class="control-label">Фото (менее 500кб)</label>
+                    <InputFile id="photo" OnChange="@OnInputFileChange" accept=".jpg,.jpeg,.png,.gif" />
                 </div>
                 <div class="form-group">
                     <br />
@@ -81,10 +85,18 @@ else
             NavigationManager.NavigateTo("/Posetitels/Index");
         }
     }
-
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var path = Path.Combine(_env.WebRootPath, "img/employers", e.File.Name);
+        using (var stream = new FileStream(path, FileMode.Create))
+        {
+            await e.File.OpenReadStream().CopyToAsync(stream);
+        }
+        posetitel.Фото = Path.Combine("img/employers", e.File.Name);
+    }
     private async Task HandleValidSubmit()
     {
-        _context.posetitel.Update(posetitel);
+        _context.Posetitel.Update(posetitel);
         await _context.SaveChangesAsync();
         NavigationManager.NavigateTo("/Posetitels/Index");
     }

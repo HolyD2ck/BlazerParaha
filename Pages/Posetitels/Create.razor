@@ -3,7 +3,7 @@
 @inject BlazorApp2Context _context
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
-
+@inject IWebHostEnvironment _env
 <h1 class="t">Внести Посетителя</h1>
 <br />
 <EditForm Model="newPosetitel" OnValidSubmit="HandleValidSubmit">
@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label for="name" class="control-label">Имя</label>
-                <InputText id="name" @bind-Value="newPosetitels.Имя" />
+                <InputText id="name" @bind-Value="newPosetitel.Имя" />
             </div>
             <div class="form-group">
                 <label for="patronymic" class="control-label">Отчество</label>
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label for="vozrast" class="control-label">Возраст</label>
-                <InputText id="vozrast" @bind-Value="newPosetitel.Возраст" />
+                <InputNumber id="vozrast" @bind-Value="newPosetitel.Возраст" />
             </div>
             <div class="form-group">
                 <label for="razmer" class="control-label">Размер_багажа</label>
@@ -33,19 +33,19 @@
             </div>
             <div class="form-group">
                 <label for="sud" class="control-label">Судимость</label>
-                <InputDate id="sud" @bind-Value="newPosetitel.Судимость" />
+                <InputSelect id="sud" @bind-Value="newPosetitel.Судимость" />
             </div>
             <div class="form-group">
                 <label for="room" class="control-label">Комната</label>
-                <InputNumber id="room" @bind-Value="newPosetitel.Комната" />
+                <InputText id="room" @bind-Value="newPosetitel.Комната" />
             </div>
             <div class="form-group">
                 <label for="pit" class="control-label">Питомец</label>
-                <InputNumber id="pit" @bind-Value="newPosetitel.Питомец" />
+                <InputSelect id="pit" @bind-Value="newPosetitel.Питомец" />
             </div>
             <div class="form-group">
                 <label for="bar" class="control-label">Мини_бар</label>
-                <InputNumber id="bar" @bind-Value="newPosetitel.Мини_бар" />
+                <InputSelect id="bar" @bind-Value="newPosetitel.Мини_бар" />
             </div>
             <div class="form-group">
                 <label for="photo" class="control-label">Фото (менее 500кб)</label>
@@ -74,5 +74,14 @@
         await _context.SaveChangesAsync();
 
         NavigationManager.NavigateTo("/Posetitels/Index");
+    }
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var path = Path.Combine(_env.WebRootPath, "img/employers", e.File.Name);
+        using (var stream = new FileStream(path, FileMode.Create))
+        {
+            await e.File.OpenReadStream().CopyToAsync(stream);
+        }
+        newPosetitel.Фото = Path.Combine("img/employers", e.File.Name);
     }
 }
