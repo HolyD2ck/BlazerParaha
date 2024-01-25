@@ -1,4 +1,4 @@
-﻿using BlazorApp2.Data;
+﻿
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<BlazorApp2Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BlazorApp2Context") ?? throw new InvalidOperationException("Connection string 'BlazorApp2Context' not found.")));
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+
 
 var app = builder.Build();
 
