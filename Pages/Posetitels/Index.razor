@@ -1,0 +1,66 @@
+﻿@page "/Posetitels/Index"
+@using BlazorApp2.Models
+@inject BlazorApp2Context _context
+@using Microsoft.EntityFrameworkCore
+@inject NavigationManager NavigationManager
+
+<h1 class="t">Список Посетителей</h1>
+<br />
+@if (posetitels == null)
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+<NavLink class="nav-link" href="/Posetitel/Create">
+    <span class="oi oi-plus" aria-hidden="true"></span> Добавить посетителя
+</NavLink>
+<br>
+<table class='table'>
+    <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Куратор Группы</th>
+            <th>Профессия</th>
+            <th>День Рождения</th>
+            <th>Номер Кабинета</th>
+            <th>Зарплата</th>
+            <th>Стаж</th>
+                <th>Фото</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var posetitel in posetitels)
+        {
+            <tr>
+                <td>@posetitel.Фамилия</td>
+                <td>@posetitel.Имя</td>
+                <td>@posetitel.Отчество</td>
+                <td>@posetitel.Возраст</td>
+                <td>@posetitel.Размер_багажа</td>
+                <td>@posetitel.Судимость</td>
+                <td>@posetitel.Комната</td>
+                <td>@posetitel.Питомец</td>
+                <td>@posetitel.Мини_бар</td>
+                    <td><img class="db" src="@posetitel.Фото" alt="Фото работодателя" /></td>
+                <td>
+                    <NavLink href="@($"Posetitels/Edit/{posetitel.id}")">Изменить</NavLink> |
+                    <NavLink href="@($"Posetitels/Delete/{posetitel.id}")">Удалить</NavLink>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+@code {
+    private List<Posetitel>? posetitels;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posetitels = await _context.Posetitel.ToListAsync();
+    }
+}

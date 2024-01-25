@@ -1,56 +1,56 @@
-﻿@page "/Prepods/Edit/{id:int}"
+﻿@page "/Posetitels/Edit/{id:int}"
 @using BlazorApp2.Models
 @inject BlazorApp2Context _context
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
 
 <h3>Редактирование данных преподавателя</h3>
-@if (prepod == null)
+@if (posetitel == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <EditForm Model="@prepod" OnValidSubmit="HandleValidSubmit">
+    <EditForm Model="@posetitel" OnValidSubmit="HandleValidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="surname" class="control-label">Фамилия</label>
-                    <InputText id="surname" @bind-Value="prepod.Фамилия" />
+                    <InputText id="surname" @bind-Value="posetitel.Фамилия" />
                 </div>
                 <div class="form-group">
                     <label for="name" class="control-label">Имя</label>
-                    <InputText id="name" @bind-Value="prepod.Имя" />
+                    <InputText id="name" @bind-Value="posetitel.Имя" />
                 </div>
                 <div class="form-group">
                     <label for="patronymic" class="control-label">Отчество</label>
-                    <InputText id="patronymic" @bind-Value="prepod.Отчество" />
+                    <InputText id="patronymic" @bind-Value="posetitel.Отчество" />
                 </div>
                 <div class="form-group">
                     <label for="curator" class="control-label">Куратор Группы</label>
-                    <InputText id="curator" @bind-Value="prepod.Куратор_Группы" />
+                    <InputText id="curator" @bind-Value="posetitel.Куратор_Группы" />
                 </div>
                 <div class="form-group">
                     <label for="profession" class="control-label">Профессия</label>
-                    <InputText id="profession" @bind-Value="prepod.Профессия" />
+                    <InputText id="profession" @bind-Value="posetitel.Профессия" />
                 </div>
                 <div class="form-group">
                     <label for="birthday" class="control-label">День Рождения</label>
-                    <InputDate id="birthday" @bind-Value="prepod.День_Рождения" />
+                    <InputDate id="birthday" @bind-Value="posetitel.День_Рождения" />
                 </div>
                 <div class="form-group">
                     <label for="roomNumber" class="control-label">Номер Кабинета</label>
-                    <InputNumber id="roomNumber" @bind-Value="prepod.Номер_Кабинета" />
+                    <InputNumber id="roomNumber" @bind-Value="posetitel.Номер_Кабинета" />
                 </div>
                 <div class="form-group">
                     <label for="salary" class="control-label">Зарплата</label>
-                    <InputNumber id="salary" @bind-Value="prepod.Зарплата" />
+                    <InputNumber id="salary" @bind-Value="posetitel.Зарплата" />
                 </div>
                 <div class="form-group">
                     <label for="experience" class="control-label">Стаж</label>
-                    <InputNumber id="experience" @bind-Value="prepod.Стаж" />
+                    <InputNumber id="experience" @bind-Value="posetitel.Стаж" />
                 </div>
                 <div class="form-group">
                     <br />
@@ -58,7 +58,7 @@ else
                 </div>
                 <br />
                 <div class="form-group">
-                    <NavLink class="nav-link" href="/Prepods/Index">
+                    <NavLink class="nav-link" href="/Posetitels/Index">
                         <span class="oi oi-minus" aria-hidden="true"></span> Вернуться к Просмотру
                     </NavLink>
                 </div>
@@ -71,26 +71,26 @@ else
 @code {
     [Parameter]
     public int id { get; set; }
-    private Prepod prepod;
+    private Posetitel posetitel;
 
     protected override async Task OnInitializedAsync()
     {
-        prepod = await _context.Prepod.FirstOrDefaultAsync(m => m.id == id);
-        if (prepod == null)
+        posetitel = await _context.Posetitel.FirstOrDefaultAsync(m => m.id == id);
+        if (posetitel == null)
         {
-            NavigationManager.NavigateTo("/Prepods/Index");
+            NavigationManager.NavigateTo("/Posetitels/Index");
         }
     }
 
     private async Task HandleValidSubmit()
     {
-        _context.Prepod.Update(prepod);
+        _context.posetitel.Update(posetitel);
         await _context.SaveChangesAsync();
-        NavigationManager.NavigateTo("/Prepods/Index");
+        NavigationManager.NavigateTo("/Posetitels/Index");
     }
 
     private void Back()
     {
-        NavigationManager.NavigateTo("/Prepods/Index");
+        NavigationManager.NavigateTo("/Posetitels/Index");
     }
 }

@@ -1,0 +1,78 @@
+﻿@page "/Posetitels/Create"
+@using BlazorApp2.Models
+@inject BlazorApp2Context _context
+@using Microsoft.EntityFrameworkCore
+@inject NavigationManager NavigationManager
+
+<h1 class="t">Внести Посетителя</h1>
+<br />
+<EditForm Model="newPosetitel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="surname" class="control-label">Фамилия</label>
+                <InputText id="surname" @bind-Value="newPosetitel.Фамилия" />
+            </div>
+            <div class="form-group">
+                <label for="name" class="control-label">Имя</label>
+                <InputText id="name" @bind-Value="newPosetitels.Имя" />
+            </div>
+            <div class="form-group">
+                <label for="patronymic" class="control-label">Отчество</label>
+                <InputText id="patronymic" @bind-Value="newPosetitel.Отчество" />
+            </div>
+            <div class="form-group">
+                <label for="vozrast" class="control-label">Возраст</label>
+                <InputText id="vozrast" @bind-Value="newPosetitel.Возраст" />
+            </div>
+            <div class="form-group">
+                <label for="razmer" class="control-label">Размер_багажа</label>
+                <InputText id="razmer" @bind-Value="newPosetitel.Размер_багажа" />
+            </div>
+            <div class="form-group">
+                <label for="sud" class="control-label">Судимость</label>
+                <InputDate id="sud" @bind-Value="newPosetitel.Судимость" />
+            </div>
+            <div class="form-group">
+                <label for="room" class="control-label">Комната</label>
+                <InputNumber id="room" @bind-Value="newPosetitel.Комната" />
+            </div>
+            <div class="form-group">
+                <label for="pit" class="control-label">Питомец</label>
+                <InputNumber id="pit" @bind-Value="newPosetitel.Питомец" />
+            </div>
+            <div class="form-group">
+                <label for="bar" class="control-label">Мини_бар</label>
+                <InputNumber id="bar" @bind-Value="newPosetitel.Мини_бар" />
+            </div>
+            <div class="form-group">
+                <label for="photo" class="control-label">Фото (менее 500кб)</label>
+                <InputFile id="photo" OnChange="@OnInputFileChange" accept=".jpg,.jpeg,.png,.gif" />
+            </div>
+            <div class="form-group">
+                <br />
+                <button type="submit">Добавить преподавателя</button>
+            </div>
+            <br />
+            <div class="form-group">
+                <NavLink class="nav-link" href="/Posetitels/Index">
+                    <span class="oi oi-minus" aria-hidden="true"></span> Вернуться к Просмотру
+                </NavLink>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private Posetitel newPosetitel = new Posetitel();
+
+    private async Task HandleValidSubmit()
+    {
+        _context.Posetitel.Add(newPosetitel);
+        await _context.SaveChangesAsync();
+
+        NavigationManager.NavigateTo("/Posetitels/Index");
+    }
+}
