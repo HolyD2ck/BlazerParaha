@@ -1,0 +1,70 @@
+﻿@page "/Rabotniks/Index"
+@using BlazorApp2.Models
+@inject BlazorApp2Context _context
+@using Microsoft.EntityFrameworkCore
+@inject NavigationManager NavigationManager
+
+<h1 class="t">Список работников</h1>
+<br />
+@if (rabotniks == null)
+{
+    <p><em>Загрузка...</em></p>
+}
+else
+{
+    <NavLink class="nav-link" href="/Rabotniks/Create">
+        <div class="n">
+        <span class="oi oi-plus" aria-hidden="true"></span> Добавить работника
+        </div>
+    </NavLink>
+    <br>
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Рост</th>
+                <th>Должность</th>
+                <th>Стаж</th>
+                <th>Планета_происхождения</th>
+                <th>Образование</th>
+                <th>Возраст</th>
+                <th>Фото</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rabotnik in rabotniks)
+            {
+                <tr>
+                    <td>@rabotnik.Фамилия</td>
+                    <td>@rabotnik.Имя</td>
+                    <td>@rabotnik.Отчество</td>
+                    <td>@rabotnik.Рост</td>
+                    <td>@rabotnik.Должность</td>
+                    <td>@rabotnik.Стаж</td>
+                    <td>@rabotnik.Планета_происхождения</td>
+                    <td>@rabotnik.Образование</td>
+                    <td>@rabotnik.Возраст</td>
+                    <td><img class="db" src="@rabotnik.Фото" alt="Фото работника" /></td>
+                    <td>
+
+                        <NavLink href="@($"Rabotniks/Edit/{rabotnik.id}")">Изменить</NavLink> |
+                        <NavLink href="@($"Rabotniks/Delete/{rabotnik.id}")">Удалить</NavLink>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Rabotnik>? rabotniks;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _context.GetData();
+        rabotniks = await _context.Rabotnik.ToListAsync();
+    }
+}

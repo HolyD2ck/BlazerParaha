@@ -33,7 +33,10 @@
             </div>
             <div class="form-group">
                 <label for="sud" class="control-label">Судимость</label>
-                <InputSelect id="sud" @bind-Value="newPosetitel.Судимость" />
+                <InputSelect id="sud" @bind-Value="newPosetitel.Судимость">
+                    <option value="true">Да</option>
+                    <option value="false">Нет</option>
+                </InputSelect>
             </div>
             <div class="form-group">
                 <label for="room" class="control-label">Комната</label>
@@ -41,25 +44,35 @@
             </div>
             <div class="form-group">
                 <label for="pit" class="control-label">Питомец</label>
-                <InputSelect id="pit" @bind-Value="newPosetitel.Питомец" />
+                <InputSelect id="sud" @bind-Value="newPosetitel.Питомец">
+                    <option value="true">Да</option>
+                    <option value="false">Нет</option>
+                </InputSelect>
             </div>
             <div class="form-group">
                 <label for="bar" class="control-label">Мини_бар</label>
-                <InputSelect id="bar" @bind-Value="newPosetitel.Мини_бар" />
+                <InputSelect id="sud" @bind-Value="newPosetitel.Мини_бар">
+                    <option value="true">Да</option>
+                    <option value="false">Нет</option>
+                </InputSelect>
             </div>
             <div class="form-group">
+                <div class="n">
                 <label for="photo" class="control-label">Фото (менее 500кб)</label>
                 <InputFile id="photo" OnChange="@OnInputFileChange" accept=".jpg,.jpeg,.png,.gif" />
-            </div>
-            <div class="form-group">
-                <br />
-                <button type="submit">Добавить преподавателя</button>
+                </div>
             </div>
             <br />
+            <button type="submit" class="btn btn-success">Добавить посетителя</button>
+            <br />
             <div class="form-group">
+                
                 <NavLink class="nav-link" href="/Posetitels/Index">
+                    <div class="n">
                     <span class="oi oi-minus" aria-hidden="true"></span> Вернуться к Просмотру
+                    </div>
                 </NavLink>
+                
             </div>
         </div>
     </div>
@@ -77,11 +90,11 @@
     }
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
-        var path = Path.Combine(_env.WebRootPath, "img/employers", e.File.Name);
+        var path = Path.Combine(_env.WebRootPath, "imgbase", e.File.Name);
         using (var stream = new FileStream(path, FileMode.Create))
         {
             await e.File.OpenReadStream().CopyToAsync(stream);
         }
-        newPosetitel.Фото = Path.Combine("img/employers", e.File.Name);
+        newPosetitel.Фото = Path.Combine("imgbase", e.File.Name);
     }
 }

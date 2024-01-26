@@ -56,20 +56,19 @@ else
                     <label for="photo" class="control-label">Фото (менее 500кб)</label>
                     <InputFile id="photo" OnChange="@OnInputFileChange" accept=".jpg,.jpeg,.png,.gif" />
                 </div>
-                <div class="form-group">
-                    <br />
-                    <button type="submit">Изменить преподавателя</button>
-                </div>
                 <br />
                 <div class="form-group">
+
                     <NavLink class="nav-link" href="/Posetitels/Index">
+                        <div class="n">
                         <span class="oi oi-minus" aria-hidden="true"></span> Вернуться к Просмотру
+                        </div>
                     </NavLink>
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Сохранить</button>
-        <button class="btn btn-secondary" @onclick="Back">Отмена</button>
+        <button type="submit" class="btn btn-success">Сохранить изменения</button>
+
     </EditForm>
 }
 @code {

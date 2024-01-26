@@ -1,10 +1,10 @@
-﻿@page "/Students/Delete/{id:int}"
+﻿@page "/Rabotniks/Delete/{id:int}"
 @using BlazorApp2.Models
 @inject BlazorApp2Context _context
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
 
-<h1 class="t">Вы уверены, что хотите удалить этого студента?</h1>
+<h1 class="t">Вы уверены, что хотите удалить этого работника?</h1>
 <button class="btn btn-danger" @onclick="HandleValidSubmit">Удалить</button>
 <button class="btn btn-info" @onclick="Back">Назад</button>
 
@@ -15,29 +15,29 @@
 
     private async Task HandleValidSubmit()
     {
-        var student = await _context.Student.FirstOrDefaultAsync(m => m.id == id);
+        var rabotnik = await _context.Rabotnik.FirstOrDefaultAsync(m => m.id == id);
 
-        if (student != null)
+        if (rabotnik != null)
         {
-            _context.Student.Remove(student);
+            _context.Rabotnik.Remove(rabotnik);
             await _context.SaveChangesAsync();
         }
 
-        NavigationManager.NavigateTo("/Students/Index");
+        NavigationManager.NavigateTo("/Rabotniks/Index");
     }
 
     protected override async Task OnInitializedAsync()
     {
        
-        var student = await _context.Student.FirstOrDefaultAsync(m => m.id == id);
-        if (student == null)
+        var rabotnik = await _context.Rabotnik.FirstOrDefaultAsync(m => m.id == id);
+        if (rabotnik == null)
         {
-            NavigationManager.NavigateTo("/Students/Index");
+            NavigationManager.NavigateTo("/Rabotniks/Index");
         }
     }
     public void Back()
     {
 
-            NavigationManager.NavigateTo("/Students/Index");
+        NavigationManager.NavigateTo("/Rabotniks/Index");
     }
 }

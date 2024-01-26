@@ -1,0 +1,108 @@
+﻿@page "/Rabotniks/Edit/{id:int}"
+@using BlazorApp2.Models
+@inject BlazorApp2Context _context
+@using Microsoft.EntityFrameworkCore
+@inject NavigationManager NavigationManager
+@inject IWebHostEnvironment _env
+<h3>Редактирование данных работника</h3>
+@if (rabotnik == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="@rabotnik" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="surname" class="control-label">Фамилия</label>
+                    <InputText id="surname" @bind-Value="rabotnik.Фамилия" />
+                </div>
+                <div class="form-group">
+                    <label for="name" class="control-label">Имя</label>
+                    <InputText id="name" @bind-Value="rabotnik.Имя" />
+                </div>
+                <div class="form-group">
+                    <label for="patronymic" class="control-label">Отчество</label>
+                    <InputText id="patronymic" @bind-Value="rabotnik.Отчество" />
+                </div>
+                <div class="form-group">
+                    <label for="height" class="control-label">Рост</label>
+                    <InputNumber id="height" @bind-Value="rabotnik.Рост" />
+                </div>
+                <div class="form-group">
+                    <label for="dolj" class="control-label">Должность</label>
+                    <InputText id="dolj" @bind-Value="rabotnik.Должность" />
+                </div>
+                <div class="form-group">
+                    <label for="staj" class="control-label">Стаж</label>
+                    <InputNumber id="staj" @bind-Value="rabotnik.Стаж" />
+                </div>
+                <div class="form-group">
+                    <label for="plan" class="control-label">Планета_происхождения</label>
+                    <InputText id="plan" @bind-Value="rabotnik.Планета_происхождения" />
+                </div>
+                <div class="form-group">
+                    <label for="obr" class="control-label">Образование</label>
+                    <InputText id="obr" @bind-Value="rabotnik.Образование" />
+                </div>
+                <div class="form-group">
+                    <label for="age" class="control-label">Возраст</label>
+                    <InputNumber id="age" @bind-Value="rabotnik.Возраст" />
+                </div>
+                <div class="form-group">
+                    <div class="n">
+                        <label for="photo" class="control-label">Фото (менее 500кб)</label>
+                        <InputFile id="photo" OnChange="@OnInputFileChange" accept=".jpg,.jpeg,.png,.gif" />
+                    </div>
+                </div>
+            
+                <br />
+                <div class="form-group">
+                    <NavLink class="nav-link" href="/Rabotniks/Index">
+                        <div class="n">
+                        <span class="oi oi-minus" aria-hidden="true"></span> Вернуться к Просмотру
+                        </div>
+                    </NavLink>
+                </div>
+            </div>
+        </div>
+    <button type="submit" class="btn btn-success">Сохранить изменения</button>
+    </EditForm>
+}
+@code {
+    [Parameter]
+    public int id { get; set; }
+    private Rabotnik rabotnik;
+
+    protected override async Task OnInitializedAsync()
+    {
+        rabotnik = await _context.Rabotnik.FirstOrDefaultAsync(m => m.id == id);
+        if (rabotnik == null)
+        {
+            NavigationManager.NavigateTo("/Rabotniks/Index");
+        }
+    }
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var path = Path.Combine(_env.WebRootPath, "img/imgbaserabot", e.File.Name);
+        using (var stream = new FileStream(path, FileMode.Create))
+        {
+            await e.File.OpenReadStream().CopyToAsync(stream);
+        }
+        rabotnik.Фото = Path.Combine("img/imgbaserabot", e.File.Name);
+    }
+    private async Task HandleValidSubmit()
+    {
+        _context.Rabotnik.Update(rabotnik);
+        await _context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/Rabotniks/Index");
+    }
+
+    private void Back()
+    {
+        NavigationManager.NavigateTo("/Rabotniks/Index");
+    }
+}

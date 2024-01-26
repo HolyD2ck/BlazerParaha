@@ -12,9 +12,110 @@ using BlazorApp2.Models;
         {
         }
 
-        public DbSet<BlazorApp2.Models.Student> Student { get; set; } = default!;
+        public DbSet<BlazorApp2.Models.Rabotnik> Rabotnik { get; set; } = default!;
 
         public DbSet<BlazorApp2.Models.Posetitel> Posetitel { get; set; } = default!;
+    private static readonly Random rd = new Random();
+    public void GetData()
+    {
+        if (!Rabotnik.Any())
+        {
+            var data = RabotnikInfo();
+            Rabotnik.AddRange(data);
+            SaveChanges();
+        }
+    }
+    public void GetData2()
+    {
+        if (!Posetitel.Any())
+        {
+            var data2 = PosetitelInfo();
+            Posetitel.AddRange(data2);
+            SaveChanges();
+        }
+    }
+    public int Random()
+    {
+        return rd.Next(0, 20);
+    }
+    public string GetPhoto()
+    {
+        int random = Random();
+        string sourceFolderPath = "..\\BlazorApp2\\wwwroot\\auto\\dataimage";
+        string targetFolderPath = "..\\BlazorApp2\\wwwroot\\auto\\dataimagenext";
+        string[] files = Directory.GetFiles(sourceFolderPath);
+        string sourceFile = files[random];
+        string targetFile = Path.Combine(targetFolderPath, Path.GetFileName(sourceFile));
 
-   
+        File.Copy(sourceFile, targetFile, true);
+
+        return Path.Combine("img", "applicants", Path.GetFileName(sourceFile));
+    }
+    public string GetPhoto2()
+    {
+        int random = Random();
+        string sourceFolderPath = "..\\BlazorApp2\\wwwroot\\auto\\rabotnik";
+        string targetFolderPath = "..\\BlazorApp2\\wwwroot\\auto\\rabotniknext";
+        string[] files = Directory.GetFiles(sourceFolderPath);
+        string sourceFile = files[random];
+        string targetFile = Path.Combine(targetFolderPath, Path.GetFileName(sourceFile));
+
+        File.Copy(sourceFile, targetFile, true);
+
+        return Path.Combine("img", "rabotniks", Path.GetFileName(sourceFile));
+    }
+
+    public List<Rabotnik> RabotnikInfo()
+    {
+        List<string> lines = File.ReadAllLines("..\\BlazorApp2\\wwwroot\\Base\\rabotniks.txt").ToList();
+        var Rabotnik = new List<Rabotnik>();
+
+        foreach (var line in lines)
+        {
+            var photo = GetPhoto();
+            string[] spl = line.Split(';');
+            var rabotnik = new Rabotnik
+            {
+                Фамилия = spl[0],
+                Имя = spl[1],
+                Отчество = spl[2],
+                Рост = Convert.ToInt32(spl[3]),
+                Должность = spl[4],
+                Стаж = Convert.ToInt32(spl[5]),
+                Планета_происхождения = spl[6],
+                Образование = spl[7],
+                Возраст = Convert.ToInt32(spl[8]),
+                Фото = photo
+            };
+            Rabotnik.Add(rabotnik);
+        }
+        return Rabotnik;
+    }
+    public List<Posetitel> PosetitelInfo()
+    {
+        List<string> lines = File.ReadAllLines("..\\BlazorApp2\\wwwroot\\Base\\posetitel.txt").ToList();
+        var Posetitel = new List<Posetitel>();
+
+        foreach (var line in lines)
+        {
+            var photo = GetPhoto2();
+            string[] spl = line.Split(';');
+            var posetitel = new Posetitel
+            {
+                Фамилия = spl[0],
+                Имя = spl[1],
+                Отчество = spl[2],
+                Возраст = Convert.ToInt32(spl[3]),
+                Размер_багажа = spl[4],
+                Судимость = Convert.ToBoolean(spl[5]),
+                Комната = spl[6],
+                Питомец = Convert.ToBoolean(spl[7]),
+                Мини_бар = Convert.ToBoolean(spl[8]),
+                Фото = photo
+            };
+            Posetitel.Add(posetitel);
+        }
+        return Posetitel;
+    }
+
 }
