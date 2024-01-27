@@ -36,38 +36,38 @@ using BlazorApp2.Models;
     }
     public int Random()
     {
-        return rd.Next(0, 20);
+        return rd.Next(0, 10);
     }
     public string GetPhoto()
     {
         int random = Random();
-        string sourceFolderPath = "..\\BlazorApp2\\wwwroot\\auto\\dataimage";
-        string targetFolderPath = "..\\BlazorApp2\\wwwroot\\auto\\dataimagenext";
+        string sourceFolderPath = "..\\Blazer\\wwwroot\\auto\\dataimage";
+        string targetFolderPath = "..\\Blazer\\wwwroot\\auto\\dataimagenext";
         string[] files = Directory.GetFiles(sourceFolderPath);
         string sourceFile = files[random];
         string targetFile = Path.Combine(targetFolderPath, Path.GetFileName(sourceFile));
 
         File.Copy(sourceFile, targetFile, true);
 
-        return Path.Combine("img", "applicants", Path.GetFileName(sourceFile));
+        return Path.Combine("auto", "dataimage", Path.GetFileName(sourceFile));
     }
     public string GetPhoto2()
     {
         int random = Random();
-        string sourceFolderPath = "..\\BlazorApp2\\wwwroot\\auto\\rabotnik";
-        string targetFolderPath = "..\\BlazorApp2\\wwwroot\\auto\\rabotniknext";
+        string sourceFolderPath = "..\\Blazer\\wwwroot\\auto\\rabotnik";
+        string targetFolderPath = "..\\Blazer\\wwwroot\\auto\\rabotniknext";
         string[] files = Directory.GetFiles(sourceFolderPath);
         string sourceFile = files[random];
         string targetFile = Path.Combine(targetFolderPath, Path.GetFileName(sourceFile));
 
         File.Copy(sourceFile, targetFile, true);
 
-        return Path.Combine("img", "rabotniks", Path.GetFileName(sourceFile));
+        return Path.Combine("auto", "rabotnik", Path.GetFileName(sourceFile));
     }
 
     public List<Rabotnik> RabotnikInfo()
     {
-        List<string> lines = File.ReadAllLines("..\\BlazorApp2\\wwwroot\\Base\\rabotniks.txt").ToList();
+        List<string> lines = File.ReadAllLines("..\\Blazer\\wwwroot\\Base\\rabotnik.txt").ToList();
         var Rabotnik = new List<Rabotnik>();
 
         foreach (var line in lines)
@@ -93,7 +93,7 @@ using BlazorApp2.Models;
     }
     public List<Posetitel> PosetitelInfo()
     {
-        List<string> lines = File.ReadAllLines("..\\BlazorApp2\\wwwroot\\Base\\posetitel.txt").ToList();
+        List<string> lines = File.ReadAllLines("..\\Blazer\\wwwroot\\Base\\posetitel.txt").ToList();
         var Posetitel = new List<Posetitel>();
 
         foreach (var line in lines)

@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\auto\dataimagenext\" />
+    <Folder Include="wwwroot\auto\rabotniknext\" />
     <Folder Include="wwwroot\Base\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\imgbase\" />
